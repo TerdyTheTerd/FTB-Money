@@ -71,6 +71,20 @@ public class FTBMoneyEventHandler
 			NBTUtils.writeNBTSafe(getFile(event.getWorld()), Shop.SERVER.serializeNBT());
 		}
 	}
+	
+	@SubscribeEvent
+	public static void onPlayerDimChanged(PlayerEvent.PlayerChangedDimensionEvent event) {
+		if(event.player instanceof EntityPlayerMP) {
+			new MessageUpdateMoney(FTBMoney.getMoney(event.player)).sendTo((EntityPlayerMP) event.player);
+		}
+	}
+	
+	@SubscribeEvent
+	public static void onPlayerRespawn(PlayerEvent.PlayerRespawnEvent event) {
+		if(event.player instanceof EntityPlayerMP) {
+			new MessageUpdateMoney(FTBMoney.getMoney(event.player)).sendTo((EntityPlayerMP) event.player);
+		}
+	}
 
 	@SubscribeEvent
 	public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event)
